@@ -42,3 +42,12 @@ a[href*="twitter.com"],
   min-width: 160px !important;
   width: 100% !important;
 }
+
+/* hide toolbar circle buttons (X/Twitter, info) */
+a.c-button.circle {
+  display: none !important;
+}
+
+.tabler-icon-info-circle {
+  display: none !important;
+}
