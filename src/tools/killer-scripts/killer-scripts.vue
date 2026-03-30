@@ -1,13 +1,18 @@
 <script setup lang="ts">
 const scripts = ref<{ name: string; download_url: string }[]>([]);
+const descriptions = ref<Record<string, { name: string; description: string }>>({});
 const loading = ref(true);
 const error = ref(false);
 
 onMounted(async () => {
   try {
-    const res = await fetch('https://api.github.com/repos/SteveTheKiller/killer-scripts/contents/');
-    const data = await res.json();
-    scripts.value = data
+    const [contentsRes, descRes] = await Promise.all([
+      fetch('https://api.github.com/repos/SteveTheKiller/killer-scripts/contents/'),
+      fetch('https://raw.githubusercontent.com/SteveTheKiller/killer-scripts/main/descriptions.json'),
+    ]);
+    const contents = await contentsRes.json();
+    descriptions.value = await descRes.json();
+    scripts.value = contents
       .filter((f: any) => f.name.endsWith('.ps1'))
       .sort((a: any, b: any) => a.name.localeCompare(b.name));
   } catch {
@@ -35,16 +40,19 @@ onMounted(async () => {
       Failed to load scripts from GitHub.
     </n-alert>
 
-    <div v-else flex flex-col gap-2>
+    <div v-else flex flex-col gap-3>
       <div
         v-for="script in scripts"
         :key="script.name"
-        flex items-center justify-between
+        flex items-center justify-between gap-4
         p-3
         style="border: 1px solid rgba(255,255,255,0.1); border-radius: 6px;"
       >
-        <span font-mono>{{ script.name }}</span>
-        <a :href="script.download_url" :download="script.name">
+        <div flex flex-col gap-1>
+          <span font-mono font-bold>{{ descriptions[script.name]?.name ?? script.name }}</span>
+          <span op-60 text-sm>{{ descriptions[script.name]?.description ?? '' }}</span>
+        </div>
+        <a :href="script.download_url" :download="script.name" style="flex-shrink: 0;">
           <c-button size="small">Download</c-button>
         </a>
       </div>
