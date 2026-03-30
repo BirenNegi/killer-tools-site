@@ -18,8 +18,9 @@ a[href*="twitter.com"],
 }
 
 .sider-content {
-  margin-top: -164px !important;
+  margin-top: -170px !important;
   position: relative;
+  padding-top: -20px !important;
 }
 
 /* --- sidebar logo: hide SVG, replace header with our image --- */
@@ -79,8 +80,8 @@ a.c-button.circle:not([aria-label="Toggle menu"]),
   margin-bottom: 0 !important;
 }
 
-.menu-wrapper {
-  margin-top: 10px;
+#app .n-layout-sider .n-scrollbar-content > div:first-child {
+  margin-top: -55px;
 }
 
 div:first-child > .menu-wrapper .n-menu-item-content {
