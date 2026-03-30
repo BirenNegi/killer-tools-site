@@ -44,21 +44,20 @@ a[href*="twitter.com"],
   display: none !important;
 }
 
-.hero-wrapper {
+.sider-content::before {
   display: none !important;
 }
 
-.sider-content::before {
-  content: '';
+.sider-logo {
   display: block;
-  background-image: url('/sidebar-220x72.png') !important;
-  background-repeat: no-repeat;
-  background-size: contain;
-  background-position: 16px center;
   height: 72px;
-  margin-bottom: 0px;
-  padding-top: 0px;
-  margin-left: 40px;
+  padding-left: 56px;
+  cursor: pointer;
+}
+
+.sider-logo img {
+  height: 72px;
+  object-fit: contain;
 }
 
 .hero-wrapper .text-wrapper {
