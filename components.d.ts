@@ -127,6 +127,7 @@ declare module '@vue/runtime-core' {
     JsonViewer: typeof import('./src/tools/json-viewer/json-viewer.vue')['default']
     JwtParser: typeof import('./src/tools/jwt-parser/jwt-parser.vue')['default']
     KeycodeInfo: typeof import('./src/tools/keycode-info/keycode-info.vue')['default']
+    KillerScripts: typeof import('./src/tools/killer-scripts/killer-scripts.vue')['default']
     ListConverter: typeof import('./src/tools/list-converter/list-converter.vue')['default']
     LocaleSelector: typeof import('./src/modules/i18n/components/locale-selector.vue')['default']
     LoremIpsumGenerator: typeof import('./src/tools/lorem-ipsum-generator/lorem-ipsum-generator.vue')['default']
