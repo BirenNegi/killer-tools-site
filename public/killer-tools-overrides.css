@@ -51,7 +51,7 @@ a[href*="twitter.com"],
 .sider-logo {
   display: block;
   height: 100px;
-  padding-left: 85px;
+  padding-left: 0px;
   cursor: pointer;
 }
 
