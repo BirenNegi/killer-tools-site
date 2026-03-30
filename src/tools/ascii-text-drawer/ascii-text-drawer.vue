@@ -32,7 +32,11 @@ watchEffect(async () => {
     errored.value = false;
   }
   catch (e: any) {
-    errored.value = true;
+    if (font.value !== 'Standard') {
+      font.value = 'Standard';
+    } else {
+      errored.value = true;
+    }
   }
   processing.value = false;
 });
