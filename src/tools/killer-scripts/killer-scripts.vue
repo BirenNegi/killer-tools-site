@@ -3,6 +3,7 @@ const scripts = ref<{ name: string; download_url: string }[]>([]);
 const descriptions = ref<Record<string, { name: string; description: string }>>({});
 const loading = ref(true);
 const error = ref(false);
+const downloading = ref<string | null>(null);
 
 onMounted(async () => {
   try {
@@ -21,6 +22,22 @@ onMounted(async () => {
     loading.value = false;
   }
 });
+
+async function downloadScript(script: { name: string; download_url: string }) {
+  downloading.value = script.name;
+  try {
+    const res = await fetch(script.download_url);
+    const blob = await res.blob();
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = script.name;
+    a.click();
+    URL.revokeObjectURL(url);
+  } finally {
+    downloading.value = null;
+  }
+}
 </script>
 
 <template>
@@ -52,9 +69,14 @@ onMounted(async () => {
           <span font-mono font-bold>{{ descriptions[script.name]?.name ?? script.name }}</span>
           <span op-60 text-sm>{{ descriptions[script.name]?.description ?? '' }}</span>
         </div>
-        <a :href="script.download_url" :download="script.name" style="flex-shrink: 0;">
-          <c-button size="small">Download</c-button>
-        </a>
+        <c-button
+          size="small"
+          style="flex-shrink: 0;"
+          :loading="downloading === script.name"
+          @click="downloadScript(script)"
+        >
+          Download
+        </c-button>
       </div>
     </div>
   </c-card>
