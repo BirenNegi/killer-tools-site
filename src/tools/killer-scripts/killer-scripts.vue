@@ -4,6 +4,7 @@ const descriptions = ref<Record<string, { name: string; description: string }>>(
 const loading = ref(true);
 const error = ref(false);
 const downloading = ref<string | null>(null);
+const search = ref('');
 
 onMounted(async () => {
   try {
@@ -16,12 +17,31 @@ onMounted(async () => {
     scripts.value = contents
       .filter((f: any) => f.name.endsWith('.ps1'))
       .sort((a: any, b: any) => a.name.localeCompare(b.name));
-  } catch {
+  }
+  catch {
     error.value = true;
-  } finally {
+  }
+  finally {
     loading.value = false;
   }
 });
+
+const filteredScripts = computed(() => {
+  const q = search.value.toLowerCase().trim();
+  if (!q) return scripts.value;
+  return scripts.value.filter((s) => {
+    const desc = descriptions.value[s.name];
+    return (
+      s.name.toLowerCase().includes(q)
+      || desc?.name?.toLowerCase().includes(q)
+      || desc?.description?.toLowerCase().includes(q)
+    );
+  });
+});
+
+function acronym(filename: string) {
+  return filename.replace('.ps1', '');
+}
 
 async function downloadScript(script: { name: string; download_url: string }) {
   downloading.value = script.name;
@@ -34,52 +54,85 @@ async function downloadScript(script: { name: string; download_url: string }) {
     a.download = script.name;
     a.click();
     URL.revokeObjectURL(url);
-  } finally {
+  }
+  finally {
     downloading.value = null;
   }
 }
 </script>
 
 <template>
-  <div style="flex: 1 1 900px; max-width: 1200px;">
-    <c-card>
-      <div mb-4>
-        <p op-70>
-          PowerShell scripts for Windows administration and MSP field work.
-          Source on <a href="https://github.com/SteveTheKiller/killer-scripts" target="_blank" style="color: inherit; text-decoration: underline;">GitHub</a>.
-        </p>
+  <div style="flex: 1 1 900px; max-width: 1400px;">
+    <div mb-4 flex items-center justify-between gap-4 flex-wrap>
+      <p op-70 m-0>
+        PowerShell scripts for Windows administration and MSP field work.
+        Source on <a href="https://github.com/SteveTheKiller/killer-scripts" target="_blank" style="color: inherit; text-decoration: underline;">GitHub</a>.
+      </p>
+      <c-input
+        v-model:value="search"
+        placeholder="Search scripts..."
+        style="max-width: 260px;"
+        clearable
+      />
+    </div>
+
+    <div v-if="loading" flex justify-center py-10>
+      <n-spin size="large" />
+    </div>
+
+    <n-alert v-else-if="error" type="error" mb-4>
+      Failed to load scripts from GitHub.
+    </n-alert>
+
+    <template v-else>
+      <div
+        v-if="filteredScripts.length === 0"
+        flex justify-center py-10 op-50
+      >
+        No scripts match "{{ search }}"
       </div>
 
-      <div v-if="loading" flex justify-center py-6>
-        <n-spin />
-      </div>
-
-      <n-alert v-else-if="error" type="error" mb-4>
-        Failed to load scripts from GitHub.
-      </n-alert>
-
-      <div v-else flex flex-col gap-3>
-        <div
-          v-for="script in scripts"
+      <div
+        v-else
+        class="grid grid-cols-1 gap-12px sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4"
+      >
+        <c-card
+          v-for="script in filteredScripts"
           :key="script.name"
-          flex items-center justify-between gap-4
-          p-3
-          style="border: 1px solid rgba(255,255,255,0.1); border-radius: 6px;"
+          class="flex flex-col justify-between transition transition-duration-0.5s !border-2px !hover:border-primary cursor-pointer"
+          @click="downloadScript(script)"
         >
-          <div flex flex-col gap-1>
-            <span font-bold font-mono>{{ descriptions[script.name]?.name ?? script.name }}</span>
-            <span text-sm op-60>{{ descriptions[script.name]?.description ?? '' }}</span>
+          <div>
+            <div flex items-start justify-between gap-2 mb-3>
+              <span
+                class="font-mono font-bold text-primary"
+                style="font-size: 1.4rem; letter-spacing: 0.05em; line-height: 1;"
+              >>_{{ acronym(script.name) }}</span>
+              <n-tag
+                v-if="downloading === script.name"
+                size="small"
+                type="success"
+              >
+                ↓
+              </n-tag>
+            </div>
+
+            <div class="text-sm font-semibold text-black dark:text-white mb-1">
+              {{ descriptions[script.name]?.name ?? script.name }}
+            </div>
+
+            <div class="line-clamp-2 text-xs text-neutral-500 dark:text-neutral-400">
+              {{ descriptions[script.name]?.description ?? '' }}
+            </div>
           </div>
-          <c-button
-            size="small"
-            style="flex-shrink: 0;"
-            :loading="downloading === script.name"
-            @click="downloadScript(script)"
-          >
-            Download
-          </c-button>
-        </div>
+
+          <div mt-3 flex justify-end>
+            <span class="text-xs op-40 hover:op-80 transition">
+              {{ downloading === script.name ? 'Downloading...' : 'Click to download' }}
+            </span>
+          </div>
+        </c-card>
       </div>
-    </c-card>
+    </template>
   </div>
 </template>
