@@ -45,7 +45,7 @@ const fonts = ['1Row', '3-D', '3D Diagonal', '3D-ASCII', '3x5', '4Max', '5 Line 
 </script>
 
 <template>
-  <c-card style="max-width: 600px;">
+  <c-card style="flex: 1 1 600px; max-width: 1200px;">
     <c-input-text
       v-model:value="input"
       label="Your text:"
@@ -87,11 +87,14 @@ const fonts = ['1Row', '3-D', '3D Diagonal', '3D-ASCII', '3x5', '4Max', '5 Line 
     </c-alert>
 
     <n-form-item v-if="!processing && !errored" label="Ascii Art text:">
-      <TextareaCopyable
-        :value="output"
-        mb-1 mt-1
-        copy-placement="outside"
-      />
+      <div style="overflow-x: auto; width: 100%;">
+        <TextareaCopyable
+          :value="output"
+          mb-1 mt-1
+          copy-placement="outside"
+          style="min-width: max-content;"
+        />
+      </div>
     </n-form-item>
   </c-card>
 </template>

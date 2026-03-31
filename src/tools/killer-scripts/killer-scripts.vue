@@ -62,12 +62,18 @@ async function downloadScript(script: { name: string; download_url: string }) {
 </script>
 
 <template>
-  <div style="flex: 1 1 900px; max-width: 1400px;">
-    <div mb-4 flex items-center justify-between gap-4 flex-wrap>
-      <p op-70 m-0>
-        PowerShell scripts for Windows administration and MSP field work.
-        Source on <a href="https://github.com/SteveTheKiller/killer-scripts" target="_blank" style="color: inherit; text-decoration: underline;">GitHub</a>.
-      </p>
+  <div style="flex: 1 1 900px; max-width: 1400px; margin-top: -28px;">
+    <div mb-2 flex items-center justify-end gap-3>
+      <a
+        href="https://github.com/SteveTheKiller/killer-scripts"
+        target="_blank"
+        op-50
+        hover:op-100
+        transition
+        style="color: inherit; text-decoration: none; font-size: 0.85rem;"
+      >
+        GitHub ↗
+      </a>
       <c-input
         v-model:value="search"
         placeholder="Search scripts..."
