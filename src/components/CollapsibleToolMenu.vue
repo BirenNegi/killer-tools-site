@@ -77,7 +77,7 @@ const themeVars = useThemeVars();
   flex-direction: row;
   .menu {
     flex: 1;
-    margin-bottom: 5px;
+    margin-bottom: -10px;
     ::v-deep(.n-menu-item-content::before) {
       left: 0;
       right: 13px;
