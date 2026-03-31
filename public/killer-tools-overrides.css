@@ -2,8 +2,7 @@
    killer-tools custom overrides
    ============================================================ */
 
-/* --- social links, buy me coffee, info button --- */
-
+/* --- hide social links, buy me coffee, info button, toolbar circle buttons --- */
 .support-button,
 a[href*="buymeacoffee"],
 a[href*="github.com/CorentinTh"],
@@ -12,19 +11,28 @@ a[href*="twitter.com"],
 .i-mdi-github,
 .i-mdi-twitter,
 .i-mdi-information-outline,
-.i-mdi-information {
+.i-mdi-information,
+a.c-button.circle:not([aria-label="Toggle menu"]),
+.c-button.circle:not([aria-label="Toggle menu"]) {
   display: none !important;
 }
 
+/* --- hide sidebar hero elements --- */
+.hero-wrapper svg,
+.hero-wrapper .title,
+.hero-wrapper .subtitle,
+.hero-wrapper .divider,
+.hero-wrapper .text-wrapper,
+.sider-content::before,
+.n-layout-sider .n-scrollbar-rail {
+  display: none !important;
+}
+
+/* --- sidebar layout --- */
 .sider-content {
   margin-top: -165px !important;
   position: relative;
   padding-top: -1 !important;
-}
-
-/* --- sidebar logo: hide SVG, replace header with our image --- */
-.hero-wrapper svg {
-  display: none !important;
 }
 
 .logo-click-target {
@@ -36,16 +44,6 @@ a[href*="twitter.com"],
   height: 72px;
   z-index: 100;
   cursor: pointer;
-}
-
-.hero-wrapper .title,
-.hero-wrapper .subtitle,
-.hero-wrapper .divider {
-  display: none !important;
-}
-
-.sider-content::before {
-  display: none !important;
 }
 
 .sider-logo {
@@ -61,16 +59,6 @@ a[href*="twitter.com"],
   height: 38px;
   object-fit: contain;
   object-position: top;
-}
-
-.hero-wrapper .text-wrapper {
-  display: none !important;
-}
-
-/* --- hide toolbar circle buttons --- */
-a.c-button.circle:not([aria-label="Toggle menu"]),
-.c-button.circle:not([aria-label="Toggle menu"]) {
-  display: none !important;
 }
 
 .pt-50px {
@@ -94,11 +82,19 @@ body {
   overflow-x: hidden !important;
 }
 
-.n-layout-sider .n-scrollbar-rail {
-  display: none !important;
+/* --- code output wrap --- */
+.n-code pre,
+.n-code code {
+  white-space: pre-wrap !important;
+  word-break: break-all;
 }
 
-/* --- mobile overflow fix for pre/code blocks and textareas --- */
+/* --- restore wysiwyg editor toolbar buttons --- */
+.editor-header .c-button.circle {
+  display: inline-flex !important;
+}
+
+/* --- mobile fixes --- */
 @media (max-width: 768px) {
   pre {
     max-width: 100%;
@@ -118,15 +114,8 @@ body {
     word-break: break-all;
     overflow-wrap: break-word;
   }
-}
 
-.n-code pre,
-.n-code code {
-  white-space: pre-wrap !important;
-  word-break: break-all;
-}
-
-/* --- restore wysiwyg editor toolbar buttons --- */
-.editor-header .c-button.circle {
-  display: inline-flex !important;
+  .editor-header {
+    flex-wrap: wrap;
+  }
 }
