@@ -28,7 +28,9 @@ onMounted(async () => {
 
 const filteredScripts = computed(() => {
   const q = search.value.toLowerCase().trim();
-  if (!q) return scripts.value;
+  if (!q) {
+    return scripts.value;
+  }
   return scripts.value.filter((s) => {
     const desc = descriptions.value[s.name];
     return (

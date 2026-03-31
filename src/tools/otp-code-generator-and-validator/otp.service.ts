@@ -107,7 +107,7 @@ function verifyTOTP({
 
 function buildKeyUri({
   secret,
-  app = 'IT-Tools',
+  app = 'killer-tools',
   account = 'demo-user',
   algorithm = 'SHA1',
   digits = 6,
@@ -138,3 +138,4 @@ function buildKeyUri({
 function generateSecret() {
   return createToken({ length: 16, alphabet: 'ABCDEFGHIJKLMNOPQRSTUVWXYZ234567' });
 }
+

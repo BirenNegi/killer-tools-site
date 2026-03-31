@@ -1,4 +1,8 @@
 /* TEAM */
-Developer: Corentin Thomasset
+Developer: Steve Riley
+Site: https://thekiller.net
+GitHub: https://github.com/SteveTheKiller
+
+/* THANKS */
+Original project: IT-Tools by Corentin Thomasset
 Site: https://github.com/CorentinTh
-Twitter: @cthmsst

@@ -28,7 +28,7 @@ function onUpdateFavoriteTools() {
         <ColoredCard v-if="config.showBanner" :title="$t('home.follow.title')" :icon="IconHeart">
           {{ $t('home.follow.p1') }}
           <a
-            href="https://github.com/CorentinTh/it-tools"
+            href="https://github.com/SteveTheKiller/killer-scripts"
             rel="noopener"
             target="_blank"
             :aria-label="$t('home.follow.githubRepository')"
@@ -122,3 +122,4 @@ function onUpdateFavoriteTools() {
   }
 }
 </style>
+
