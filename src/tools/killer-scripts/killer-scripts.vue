@@ -47,7 +47,7 @@ function acronym(filename: string) {
 }
 
 async function copyCommand(script: { name: string }) {
-  const cmd = `$f="$env:TEMP\\${script.name}"; irm https://raw.githubusercontent.com/SteveTheKiller/killer-scripts/main/${script.name} -OutFile $f; & $f`;
+  const cmd = `Set-ExecutionPolicy Bypass -Scope Process -Force; $f="$env:TEMP\\${script.name}"; irm https://raw.githubusercontent.com/SteveTheKiller/killer-scripts/main/${script.name} -OutFile $f; & $f`;
   await navigator.clipboard.writeText(cmd);
   copied.value = script.name;
   setTimeout(() => {
@@ -81,9 +81,8 @@ async function downloadScript(script: { name: string; download_url: string }) {
       <a
         href="https://github.com/SteveTheKiller/killer-scripts"
         target="_blank"
-        op-50
-        hover:op-100
-        transition
+
+        op-50 transition hover:op-100
         style="color: inherit; text-decoration: none; font-size: 0.85rem;"
       >
         GitHub ↗
@@ -114,7 +113,7 @@ async function downloadScript(script: { name: string; download_url: string }) {
 
       <div
         v-else
-        class="grid grid-cols-1 gap-12px sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4"
+        class="grid grid-cols-1 gap-12px lg:grid-cols-3 md:grid-cols-3 sm:grid-cols-2 xl:grid-cols-4"
       >
         <c-card
           v-for="script in filteredScripts"
@@ -122,37 +121,37 @@ async function downloadScript(script: { name: string; download_url: string }) {
           class="flex flex-col justify-between transition transition-duration-0.5s !border-2px !hover:border-primary"
         >
           <div>
-            <div flex items-start justify-between gap-2 mb-3>
+            <div mb-3 flex items-start justify-between gap-2>
               <span
-                class="font-mono font-bold text-primary"
+                class="text-primary font-bold font-mono"
                 style="font-size: 1.4rem; letter-spacing: 0.05em; line-height: 1;"
               >>_{{ acronym(script.name) }}</span>
             </div>
 
-            <div class="text-sm font-semibold text-black dark:text-white mb-1">
+            <div class="mb-1 text-sm text-black font-semibold dark:text-white">
               {{ descriptions[script.name]?.name ?? script.name }}
             </div>
 
-            <div class="text-xs text-neutral-500 dark:text-neutral-400" style="-webkit-line-clamp: 3; display: -webkit-box; -webkit-box-orient: vertical; overflow: hidden;">
+            <div class="text-xs text-neutral-500 dark:text-neutral-400" style="-webkit-line-clamp: 3; line-clamp: 3; display: -webkit-box; -webkit-box-orient: vertical; overflow: hidden;">
               {{ descriptions[script.name]?.description ?? '' }}
             </div>
           </div>
 
-          <div mt-3 flex gap-2 items-center>
+          <div mt-3 flex items-center gap-2>
             <button
-              class="flex-1 text-xs font-semibold py-1 px-2 rounded transition cursor-pointer"
+              class="flex-1 cursor-pointer rounded px-2 py-1 text-xs font-semibold transition"
               style="background: transparent; color: #1ea54c; border: 1px solid #1ea54c;"
               @click.stop="copyCommand(script)"
             >
               {{ copied === script.name ? '✓ Copied!' : '⧉ Copy Command' }}
             </button>
             <button
-              class="text-xs py-1 px-2 rounded transition cursor-pointer"
+              class="cursor-pointer rounded px-2 py-1 text-xs transition"
               style="background: transparent; color: inherit; border: 1px solid currentColor;"
               :style="{ opacity: downloading === script.name ? '0.3' : '0.5' }"
               :disabled="downloading === script.name"
-              @click.stop="downloadScript(script)"
               title="Download .ps1"
+              @click.stop="downloadScript(script)"
             >
               {{ downloading === script.name ? '...' : '↓ Download' }}
             </button>
