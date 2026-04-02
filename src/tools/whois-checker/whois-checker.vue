@@ -289,6 +289,49 @@ const remarks = computed(() => {
       {{ error }}
     </n-alert>
 
+    <!-- Skeleton loading state -->
+    <template v-if="loading">
+      <div class="grid grid-cols-1 gap-16px lg:grid-cols-2">
+        <div class="grid grid-cols-1 gap-16px" style="align-content: start;">
+          <c-card>
+            <div class="skeleton-line" style="width: 40%; height: 22px; margin-bottom: 16px;" />
+            <div class="grid grid-cols-1 gap-8px">
+              <div v-for="i in 5" :key="i" class="p-2 rounded" style="background: rgba(255,255,255,0.05)">
+                <div class="skeleton-line" style="width: 30%; height: 10px; margin-bottom: 6px;" />
+                <div class="skeleton-line" :style="`width: ${55 + (i * 7) % 30}%; height: 12px;`" />
+              </div>
+            </div>
+          </c-card>
+          <c-card>
+            <div class="skeleton-line" style="width: 30%; height: 18px; margin-bottom: 16px;" />
+            <div class="grid grid-cols-1 gap-8px">
+              <div v-for="i in 4" :key="i" class="p-2 rounded" style="background: rgba(255,255,255,0.05)">
+                <div class="skeleton-line" style="width: 20%; height: 10px; margin-bottom: 6px;" />
+                <div class="skeleton-line" :style="`width: ${60 + (i * 9) % 25}%; height: 12px;`" />
+              </div>
+            </div>
+          </c-card>
+        </div>
+        <div class="grid grid-cols-1 gap-16px" style="align-content: start;">
+          <c-card>
+            <div class="skeleton-line" style="width: 35%; height: 18px; margin-bottom: 16px;" />
+            <div v-for="i in 3" :key="i" class="mb-1 p-2 rounded" style="background: rgba(255,255,255,0.05)">
+              <div class="skeleton-line" :style="`width: ${50 + (i * 11) % 35}%; height: 12px;`" />
+            </div>
+          </c-card>
+          <c-card>
+            <div class="skeleton-line" style="width: 25%; height: 18px; margin-bottom: 16px;" />
+            <div class="grid grid-cols-1 gap-8px">
+              <div v-for="i in 4" :key="i" class="p-2 rounded" style="background: rgba(255,255,255,0.05)">
+                <div class="skeleton-line" style="width: 40%; height: 10px; margin-bottom: 6px;" />
+                <div class="skeleton-line" :style="`width: ${45 + (i * 13) % 40}%; height: 10px;`" />
+              </div>
+            </div>
+          </c-card>
+        </div>
+      </div>
+    </template>
+
     <template v-if="result">
       <!-- Expiry warning banner -->
       <n-alert v-if="expiryAlertType" :type="expiryAlertType" mb-4>
@@ -489,3 +532,22 @@ const remarks = computed(() => {
     </template>
   </div>
 </template>
+
+<style scoped>
+.skeleton-line {
+  border-radius: 4px;
+  background: linear-gradient(
+    90deg,
+    rgba(255,255,255,0.05) 25%,
+    rgba(255,255,255,0.12) 50%,
+    rgba(255,255,255,0.05) 75%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.6s infinite;
+}
+
+@keyframes shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+</style>
