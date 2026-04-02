@@ -78,24 +78,25 @@ function copyValue(value: string) {
         >
           <div>
             <div flex items-start justify-between gap-2 mb-2>
-              <n-tag size="small" :type="severityColor[severity]">
-                {{ severity }}
-              </n-tag>
-              <c-tooltip :tooltip="copiedValue === registry ? 'Copied!' : 'Copy registry key'">
-                <c-button
-                  v-if="hasRegistry(registry)"
-                  circle
-                  variant="text"
-                  style="width: 24px; height: 24px;"
-                  @click.stop="copyValue(registry)"
-                >
-                  <n-icon size="14" :component="copiedValue === registry ? Check : Copy" />
-                </c-button>
-              </c-tooltip>
-            </div>
-
-            <div class="text-xs op-40 mb-1">
-              {{ category }}
+              <div class="text-xs op-40">
+                {{ category }}
+              </div>
+              <div flex items-center gap-1 style="flex-shrink: 0;">
+                <n-tag size="small" :type="severityColor[severity]">
+                  {{ severity }}
+                </n-tag>
+                <c-tooltip :tooltip="copiedValue === registry ? 'Copied!' : 'Copy registry key'">
+                  <c-button
+                    v-if="hasRegistry(registry)"
+                    circle
+                    variant="text"
+                    style="width: 24px; height: 24px;"
+                    @click.stop="copyValue(registry)"
+                  >
+                    <n-icon size="14" :component="copiedValue === registry ? Check : Copy" />
+                  </c-button>
+                </c-tooltip>
+              </div>
             </div>
 
             <div class="text-sm font-semibold mb-2">

@@ -10,11 +10,9 @@ import { tool as safelinkDecoder } from './safelink-decoder';
 import { tool as xmlToJson } from './xml-to-json';
 import { tool as jsonToXml } from './json-to-xml';
 import { tool as regexTester } from './regex-tester';
-import { tool as regexMemo } from './regex-memo';
 import { tool as markdownToHtml } from './markdown-to-html';
 import { tool as pdfSignatureChecker } from './pdf-signature-checker';
 import { tool as numeronymGenerator } from './numeronym-generator';
-import { tool as macAddressGenerator } from './mac-address-generator';
 import { tool as textToBinary } from './text-to-binary';
 import { tool as ulidGenerator } from './ulid-generator';
 import { tool as ibanValidatorAndParser } from './iban-validator-and-parser';
@@ -105,7 +103,7 @@ export const toolsByCategory: ToolCategory[] = [
   },
   {
     name: 'Network',
-    components: [portProtocolReference, ipv4SubnetCalculator, ipv4AddressConverter, ipv4RangeExpander, macAddressLookup, macAddressGenerator, ipv6UlaGenerator, cveLookup],
+    components: [portProtocolReference, ipv4SubnetCalculator, ipv4AddressConverter, ipv4RangeExpander, macAddressLookup, ipv6UlaGenerator, cveLookup],
   },
   {
     name: 'Web',
@@ -148,6 +146,24 @@ export const toolsByCategory: ToolCategory[] = [
     components: [tokenGenerator, hashText, bcrypt, uuidGenerator, ulidGenerator, cypher, bip39, hmacGenerator, rsaKeyPairGenerator, passwordStrengthAnalyser, pdfSignatureChecker],
   },
   {
+    name: 'Development',
+    components: [
+      gitMemo,
+      randomPortGenerator,
+      crontabGenerator,
+      jsonViewer,
+      jsonMinify,
+      jsonToCsv,
+      sqlPrettify,
+      chmodCalculator,
+      dockerRunToDockerComposeConverter,
+      xmlFormatter,
+      yamlViewer,
+      emailNormalizer,
+      regexTester,
+    ],
+  },
+  {
     name: 'Converter',
     components: [
       dateTimeConverter,
@@ -175,25 +191,6 @@ export const toolsByCategory: ToolCategory[] = [
   {
     name: 'Images and videos',
     components: [qrCodeGenerator, wifiQrCodeGenerator, svgPlaceholderGenerator, cameraRecorder],
-  },
-  {
-    name: 'Development',
-    components: [
-      gitMemo,
-      randomPortGenerator,
-      crontabGenerator,
-      jsonViewer,
-      jsonMinify,
-      jsonToCsv,
-      sqlPrettify,
-      chmodCalculator,
-      dockerRunToDockerComposeConverter,
-      xmlFormatter,
-      yamlViewer,
-      emailNormalizer,
-      regexTester,
-      regexMemo,
-    ],
   },
   {
     name: 'Math',

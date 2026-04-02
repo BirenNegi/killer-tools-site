@@ -96,7 +96,7 @@ async function checkDkim(d: string) {
       const records = await dnsQuery(`${sel}._domainkey.${d}`, 'TXT');
       const dkim = records.find(r => r.includes('v=DKIM1') || r.includes('k=rsa') || r.includes('p='));
       if (dkim) {
-        found.push(`${sel}: ${dkim.length > 80 ? `${dkim.substring(0, 80)}...` : dkim}`);
+        found.push(`${sel}: ${dkim}`);
       }
     }));
     if (found.length === 0) {
@@ -199,7 +199,7 @@ const overallMessage: Record<string, string> = {
 </script>
 
 <template>
-  <div>
+  <div style="flex: 1 1 900px; max-width: 1400px; margin-top: -28px;">
     <div flex gap-3 mb-6>
       <c-input-text
         v-model:value="domain"
@@ -271,7 +271,7 @@ const overallMessage: Record<string, string> = {
           v-if="results.spf.raw && results.spf.raw !== 'DNS lookup failed.' && results.spf.raw !== 'No SPF record found.'"
           flex items-start justify-between gap-2
           class="font-mono text-xs mb-2 p-2 rounded"
-          style="background: rgba(255,255,255,0.05); word-break: break-all;"
+          style="background: rgba(255,255,255,0.05); overflow-wrap: break-word; word-break: normal;"
         >
           <span>{{ results.spf.raw }}</span>
           <c-button circle variant="text" style="width:20px;height:20px;flex-shrink:0;" @click="copyValue(results.spf.raw ?? '')">
@@ -303,7 +303,7 @@ const overallMessage: Record<string, string> = {
             v-for="(record, i) in results.dkim.value"
             :key="i"
             class="font-mono text-xs mb-1 p-2 rounded"
-            style="background: rgba(255,255,255,0.05); word-break: break-all;"
+            style="background: rgba(255,255,255,0.05); overflow-wrap: break-word; word-break: normal;"
           >
             {{ record }}
           </div>
@@ -329,7 +329,7 @@ const overallMessage: Record<string, string> = {
           v-if="results.dmarc.raw && results.dmarc.raw !== 'DNS lookup failed.' && results.dmarc.raw !== 'No DMARC record found. Domain is unprotected against spoofing.'"
           flex items-start justify-between gap-2
           class="font-mono text-xs mb-2 p-2 rounded"
-          style="background: rgba(255,255,255,0.05); word-break: break-all;"
+          style="background: rgba(255,255,255,0.05); overflow-wrap: break-word; word-break: normal;"
         >
           <span>{{ results.dmarc.raw }}</span>
           <c-button circle variant="text" style="width:20px;height:20px;flex-shrink:0;" @click="copyValue(results.dmarc.raw ?? '')">
