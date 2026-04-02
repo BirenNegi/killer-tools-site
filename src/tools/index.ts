@@ -95,6 +95,8 @@ import { tool as emailDnsChecker } from './email-dns-checker';
 import { tool as exchangeNdrLookup } from './exchange-ndr-lookup';
 import { tool as cveLookup } from './cve-lookup';
 import { tool as portProtocolReference } from './port-protocol-reference';
+import { tool as whoisChecker } from './whois-checker';
+import { tool as emailHeaderParser } from './email-header-parser';
 
 export const toolsByCategory: ToolCategory[] = [
   {
@@ -109,6 +111,8 @@ export const toolsByCategory: ToolCategory[] = [
     name: 'Web',
     components: [
       emailDnsChecker,
+      emailHeaderParser,
+      whoisChecker,
       urlEncoder,
       htmlEntities,
       urlParser,
