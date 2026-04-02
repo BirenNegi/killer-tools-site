@@ -47,7 +47,7 @@ function acronym(filename: string) {
 }
 
 async function copyCommand(script: { name: string }) {
-  const cmd = `& ([scriptblock]::Create((irm https://raw.githubusercontent.com/SteveTheKiller/killer-scripts/main/${script.name})))`;
+  const cmd = `$f="$env:TEMP\\${script.name}"; irm https://raw.githubusercontent.com/SteveTheKiller/killer-scripts/main/${script.name} -OutFile $f; & $f`;
   await navigator.clipboard.writeText(cmd);
   copied.value = script.name;
   setTimeout(() => {
