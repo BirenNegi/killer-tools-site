@@ -51,7 +51,9 @@ async function copyCommand(script: { name: string }) {
   await navigator.clipboard.writeText(cmd);
   copied.value = script.name;
   setTimeout(() => {
-    if (copied.value === script.name) copied.value = null;
+    if (copied.value === script.name) {
+      copied.value = null;
+    }
   }, 2000);
 }
 
