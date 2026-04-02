@@ -4,6 +4,7 @@ const descriptions = ref<Record<string, { name: string; description: string }>>(
 const loading = ref(true);
 const error = ref(false);
 const downloading = ref<string | null>(null);
+const copied = ref<string | null>(null);
 const search = ref('');
 
 onMounted(async () => {
@@ -43,6 +44,15 @@ const filteredScripts = computed(() => {
 
 function acronym(filename: string) {
   return filename.replace('.ps1', '');
+}
+
+async function copyCommand(script: { name: string }) {
+  const cmd = `irm https://raw.githubusercontent.com/SteveTheKiller/killer-scripts/main/${script.name} | iex`;
+  await navigator.clipboard.writeText(cmd);
+  copied.value = script.name;
+  setTimeout(() => {
+    if (copied.value === script.name) copied.value = null;
+  }, 2000);
 }
 
 async function downloadScript(script: { name: string; download_url: string }) {
@@ -107,8 +117,7 @@ async function downloadScript(script: { name: string; download_url: string }) {
         <c-card
           v-for="script in filteredScripts"
           :key="script.name"
-          class="flex flex-col justify-between transition transition-duration-0.5s !border-2px !hover:border-primary cursor-pointer"
-          @click="downloadScript(script)"
+          class="flex flex-col justify-between transition transition-duration-0.5s !border-2px !hover:border-primary"
         >
           <div>
             <div flex items-start justify-between gap-2 mb-3>
@@ -116,13 +125,6 @@ async function downloadScript(script: { name: string; download_url: string }) {
                 class="font-mono font-bold text-primary"
                 style="font-size: 1.4rem; letter-spacing: 0.05em; line-height: 1;"
               >>_{{ acronym(script.name) }}</span>
-              <n-tag
-                v-if="downloading === script.name"
-                size="small"
-                type="success"
-              >
-                ↓
-              </n-tag>
             </div>
 
             <div class="text-sm font-semibold text-black dark:text-white mb-1">
@@ -134,10 +136,24 @@ async function downloadScript(script: { name: string; download_url: string }) {
             </div>
           </div>
 
-          <div mt-3 flex justify-end>
-            <span class="text-xs op-40 hover:op-80 transition">
-              {{ downloading === script.name ? 'Downloading...' : 'Click to download' }}
-            </span>
+          <div mt-3 flex gap-2 items-center>
+            <button
+              class="flex-1 text-xs font-semibold py-1 px-2 rounded transition cursor-pointer"
+              style="background: transparent; color: #1ea54c; border: 1px solid #1ea54c;"
+              @click.stop="copyCommand(script)"
+            >
+              {{ copied === script.name ? '✓ Copied!' : '⧉ Copy Command' }}
+            </button>
+            <button
+              class="text-xs py-1 px-2 rounded transition cursor-pointer"
+              style="background: transparent; color: inherit; border: 1px solid currentColor;"
+              :style="{ opacity: downloading === script.name ? '0.3' : '0.5' }"
+              :disabled="downloading === script.name"
+              @click.stop="downloadScript(script)"
+              title="Download .ps1"
+            >
+              {{ downloading === script.name ? '...' : '↓ Download' }}
+            </button>
           </div>
         </c-card>
       </div>
