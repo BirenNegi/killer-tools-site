@@ -32,7 +32,7 @@ const filteredScripts = computed(() => {
   if (!q) {
     return scripts.value;
   }
-  return scripts.value.filter((s) => {
+  return scripts.value.filter((s: { name: string; download_url: string }) => {
     const desc = descriptions.value[s.name];
     return (
       s.name.toLowerCase().includes(q)
@@ -87,7 +87,7 @@ async function downloadScript(script: { name: string; download_url: string }) {
       >
         GitHub ↗
       </a>
-      <c-input
+      <c-input-text
         v-model:value="search"
         placeholder="Search scripts..."
         style="max-width: 260px;"

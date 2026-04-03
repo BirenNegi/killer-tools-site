@@ -1,4 +1,4 @@
-import { Terminal2 } from '@vicons/tabler';
+import Activity from '@vicons/tabler/Activity';
 import { defineTool } from '../tool';
 
 export const tool = defineTool({
@@ -7,5 +7,5 @@ export const tool = defineTool({
   description: 'PowerShell scripts for Windows administration and MSP field work.',
   keywords: ['powershell', 'scripts', 'windows', 'msp', 'sysadmin', 'download'],
   component: () => import('./killer-scripts.vue'),
-  icon: Terminal2,
+  icon: Activity,
 });

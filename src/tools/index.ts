@@ -77,6 +77,7 @@ import { tool as macAddressLookup } from './mac-address-lookup';
 import { tool as xmlFormatter } from './xml-formatter';
 import { tool as yamlViewer } from './yaml-viewer';
 import { tool as windowsEventLookup } from './windows-event-lookup';
+import { tool as powershellBuilder } from './powershell-builder';
 import { tool as m365SkuDecoder } from './m365-sku-decoder';
 import { tool as groupPolicyReference } from './group-policy-reference';
 import { tool as windowsErrorCodes } from './windows-error-codes';
@@ -96,6 +97,7 @@ export const toolsByCategory: ToolCategory[] = [
     name: 'Windows',
     components: [
       killerScripts,
+      powershellBuilder,
       groupPolicyReference,
       windowsEventLookup,
       windowsErrorCodes,
