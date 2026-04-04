@@ -26,7 +26,8 @@ const collapsedCategories = useStorage<Record<string, boolean>>(
 );
 
 function toggleCategoryCollapse({ name }: { name: string }) {
-  collapsedCategories.value[name] = !collapsedCategories.value[name];
+  const current = collapsedCategories.value[name] === undefined ? name !== 'Killer Scripts' : collapsedCategories.value[name];
+  collapsedCategories.value[name] = !current;
 }
 
 const menuOptions = computed(() =>
