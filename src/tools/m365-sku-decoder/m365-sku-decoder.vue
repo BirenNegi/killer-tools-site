@@ -60,7 +60,7 @@ function copyValue(value: string) {
     />
 
     <div class="mb-10 text-xs op-50">
-      See also: <a href="https://m365maps.com" target="_blank" rel="noopener" style="color: #1ea54c; text-decoration: none;">M365 Maps</a> (visual license comparison diagrams by Aaron Dinnage)
+      See also: <a href="https://m365maps.com" target="_blank" rel="noopener" style="color: #1ea54c; text-decoration: none;">M365 Maps</a> by Aaron Dinnage
     </div>
 
     <div v-for="{ skus, category } of filtered" :key="category" mb-8>
