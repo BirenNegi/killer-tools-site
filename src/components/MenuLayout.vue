@@ -10,7 +10,7 @@ const siderPosition = computed(() => (isSmallScreen.value ? 'absolute' : 'static
   <n-layout has-sider>
     <n-layout-sider
       bordered
-      collapse-mode="width"
+      collapse-mode="transform"
       :collapsed-width="0"
       :width="300"
       :collapsed="isMenuCollapsed"
@@ -22,12 +22,18 @@ const siderPosition = computed(() => (isSmallScreen.value ? 'absolute' : 'static
     </n-layout-sider>
     <n-layout class="content">
       <slot name="content" />
-      <div v-show="isSmallScreen && !isMenuCollapsed" class="overlay" @click="isMenuCollapsed = true" />
+      <transition name="fade">
+        <div v-if="isSmallScreen && !isMenuCollapsed" class="overlay" @click="isMenuCollapsed = true" />
+      </transition>
     </n-layout>
   </n-layout>
 </template>
 
 <style lang="less" scoped>
+.n-layout-sider {
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
 .overlay {
   position: absolute;
   top: 0;
@@ -36,6 +42,17 @@ const siderPosition = computed(() => (isSmallScreen.value ? 'absolute' : 'static
   height: 100%;
   background-color: #00000080;
   cursor: pointer;
+  transition: opacity 0.3s ease;
+}
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.3s ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
 }
 
 .content {
