@@ -37,6 +37,9 @@
     "release": "node ./scripts/release.mjs"
   },
   "dependencies": {
+    "@capacitor/android": "^8.3.0",
+    "@capacitor/cli": "^8.3.0",
+    "@capacitor/core": "^8.3.0",
     "@it-tools/bip39": "^0.0.4",
     "@it-tools/oggen": "^1.3.0",
     "@regexper/render": "^1.0.0",
@@ -139,7 +142,7 @@
     "jsdom": "^22.0.0",
     "less": "^4.1.3",
     "prettier": "^3.0.0",
-    "typescript": "~5.2.0",
+    "typescript": "~5.2.2",
     "unocss": "^0.65.1",
     "unocss-preset-scrollbar": "^0.2.1",
     "unplugin-icons": "^0.17.0",
